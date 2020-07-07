@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Skyice,六角學員">
+    <meta name="description" content="練習如何用JS寫出旅遊網">
+    <meta property="og:title" content="JS入門篇最終作業-高雄旅遊網">
+    <meta property="og:description" content="練習如何用JS寫出旅遊網">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://github.com/Skyice-Chiang/Travel_Kaohsiung_Final_Project">
+    <meta property="og:image" content="https://i.postimg.cc/d0W8DVPQ/Logo.png">
+    <title>高雄旅遊資訊網</title>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <h1>高雄旅遊資訊</h1>
+            <input list="travelarea" placeholder="--請選擇行政區--">
+            <datalist id="travelarea">
+                <option value="苓雅區">苓雅區</option>
+            </datalist>
+        </div>
+        <div class="hotarea">
+            <h3>熱門行政區</h3>
+            <ul class="arealist">
+                <li class="area">苓雅區</li>
+                <li class="colorpink area">三民區</li>
+                <li class="coloryellow area">新興區</li>
+                <li class="colorblue area">鹽埕區</li>
+            </ul>
+        </div>
+        <div class="content">
+            <h2>三民區</h2>
+            <ul>
+                <li class="card">
+                    <div class="imgbox">
+                        <h3>高雄願景館</h3>
+                        <p>三民區</p>
+                    </div>
+                    <div class="textbox">
+                        <p class="time">週二至週日10:00~18:00，每週一公休</p>
+                        <p class="address">高雄市三民區建國二路318號</p>
+                        <p class="phone">886-7-2363357</p>
+                        <p class="free">免費參觀</p>
+                    </div>
+                </li>
+                <li class="card">
+                    <div class="imgbox">
+                        <h3>高雄願景館</h3>
+                        <p>三民區</p>
+                    </div>
+                    <div class="textbox">
+                        <p class="time">週二至週日10:00~18:00，每週一公休</p>
+                        <p class="address">高雄市三民區建國二路318號</p>
+                        <p class="phone">886-7-2363357</p>
+                        <p class="free">免費參觀</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="pagination">
+            <a href="#">&lsaquo; prev</a>
+            <a href="#">1</a>
+            <a class="active" href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">next &rsaquo;</a>
+        </div>
+        <div class="footer">
+            <h4>高雄旅遊網</h4>
+            <a href="https://data.kcg.gov.tw/dataset/attractions-information">高雄市政府</a>
+        </div>
+    </div>
+    <script src="JS/all.js"></script>
+</body>
+
+</html>
