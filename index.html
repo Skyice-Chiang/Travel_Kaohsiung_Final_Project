@@ -12,6 +12,8 @@
     <meta property="og:url" content="https://github.com/Skyice-Chiang/Travel_Kaohsiung_Final_Project">
     <meta property="og:image" content="https://i.postimg.cc/d0W8DVPQ/Logo.png">
     <title>高雄旅遊資訊網</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css"
+        integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 
@@ -19,33 +21,34 @@
     <div class="wrap">
         <div class="header">
             <h1>高雄旅遊資訊</h1>
-            <input list="travelarea" placeholder="--請選擇行政區--">
-            <datalist id="travelarea">
+            <select id="travelarea">
+                <option value="--請選擇行政區--">--請選擇行政區--</option>
                 <option value="苓雅區">苓雅區</option>
-            </datalist>
+            </select>
         </div>
         <div class="hotarea">
             <h3>熱門行政區</h3>
-            <ul class="arealist">
-                <li class="area">苓雅區</li>
-                <li class="colorpink area">三民區</li>
-                <li class="coloryellow area">新興區</li>
-                <li class="colorblue area">鹽埕區</li>
-            </ul>
+            <div class="arealist">
+                <input class="area" type="button" value="苓雅區">
+                <input class="colorpink area" type="button" value="三民區">
+                <input class="coloryellow area" type="button" value="新興區">
+                <input class="colorblue area" type="button" value="鹽埕區">
+            </div>
         </div>
         <div class="content">
+            <div class="imgdown"><i class="fas fa-caret-down"></i></div>
             <h2>三民區</h2>
-            <ul>
+            <ul class="infolist">
                 <li class="card">
                     <div class="imgbox">
                         <h3>高雄願景館</h3>
                         <p>三民區</p>
                     </div>
                     <div class="textbox">
-                        <p class="time">週二至週日10:00~18:00，每週一公休</p>
-                        <p class="address">高雄市三民區建國二路318號</p>
-                        <p class="phone">886-7-2363357</p>
-                        <p class="free">免費參觀</p>
+                        <p><img src="IMG/icons_clock.png">週二至週日10:00~18:00，每週一公休</p>
+                        <p><img src="IMG/icons_pin.png">高雄市三民區建國二路318號</p>
+                        <span><img src="IMG/icons_phone.png">886-7-2363357</span>
+                        <p class="free"><img src="IMG/icons_tag.png">免費參觀</p>
                     </div>
                 </li>
                 <li class="card">
@@ -54,10 +57,10 @@
                         <p>三民區</p>
                     </div>
                     <div class="textbox">
-                        <p class="time">週二至週日10:00~18:00，每週一公休</p>
-                        <p class="address">高雄市三民區建國二路318號</p>
-                        <p class="phone">886-7-2363357</p>
-                        <p class="free">免費參觀</p>
+                        <p><img src="IMG/icons_clock.png">週二至週日10:00~18:00，每週一公休</p>
+                        <p><img src="IMG/icons_pin.png">高雄市三民區建國二路318號</p>
+                        <span><img src="IMG/icons_phone.png">886-7-2363357</span>
+                        <p class="free"><img src="IMG/icons_tag.png">免費參觀</p>
                     </div>
                 </li>
             </ul>
@@ -73,8 +76,9 @@
         </div>
         <div class="footer">
             <h4>高雄旅遊網</h4>
-            <a href="https://data.kcg.gov.tw/dataset/attractions-information">高雄市政府</a>
+            <a href="https://data.kcg.gov.tw/dataset/attractions-information">資料來源：高雄市政府</a>
         </div>
+        <a href="#" class="gotop" title="回到最上層">回到最上層</a>
     </div>
     <script src="JS/all.js"></script>
 </body>
