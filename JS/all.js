@@ -1,13 +1,16 @@
 //下拉選單各行政區域(連結到相對應的圖示資料)
 //熱門行政區也是要連結到相對應的資料
-//圖是與資料的渲染
+//圖示與資料的渲染
 //一頁顯示六個
 //跳頁效果 
 //滑動到最上方
+
+/*---- 定義 ----*/
 var select = document.querySelector("#travelarea");
 var hotArea = document.querySelector(".arealist");
-var mainList = document.querySelector(".main");
+var mainList = document.querySelector(".infolist");
 var page = document.querySelector(".pagination");
+var goTop = document.querySelector(".gotop");
 var dataAll = [
     {
         Ticketinfo: "免費參觀",
@@ -2610,15 +2613,200 @@ var dataAll = [
         Id: "C1_397000000A_000164"
     }
 ];
-console.log(dataAll.length);
+renderReady();
+pageShow();
 
-render();
-function render() {
-    var zone = "";
+/*---------- 監聽 -------------*/
+select.addEventListener("change", changeArea);
+hotArea.addEventListener("click", hotRender);
+page.addEventListener("click", goPage);
+goTop.addEventListener("click", scrollToTop);
+
+
+/*-------- 渲染畫面 ------------*/
+//起始畫面
+function renderReady() {
+    //-------- 下拉選單顯示行政區--------
+    let zone = [];
+    const zoneNoRepeat = [];
+    //篩選出行政區陣列
     dataAll.forEach(function (item) {
-        zone = item.Zone;
+        zone.push(item.Zone)
+    })
+    //篩選出不重複的行政區陣列
+    zone.forEach(function (item, index) {
+        //如果物件第一次出現的位置等於現在物件的所在位置(indexOf會判斷重複的物件位置會回到第一個物件位置上)
+        if (zone.indexOf(item) === index) {
+            zoneNoRepeat.push(item);
+        }
+    })
 
-        console.log(zone)
+    let optionStr = "";
+    let optionDefault = `
+    <option disabled="disabled" selected="true" value="--請選擇行政區--">--請選擇行政區--</option>
+    <option value="高雄全部行政區">高雄全部行政區</option> `
+    zoneNoRepeat.forEach(function (item) {
+        let optionAdd = `<option value="${item}">${item}</option>`
+        optionStr += optionAdd;
+    })
+    select.innerHTML = optionDefault + optionStr;
 
+    //-------- 主要區域顯示行政區清單-------
+    //全部顯示
+    let mainStr = "";
+    dataAll.forEach(function (item) {
+        let li = `
+        <li class="card">
+            <div class="imgbox" style="background-image:url(${item.Picture1});">
+                <h3>${item.Name}</h3>
+                <p>${item.Zone}</p>
+            </div>
+            <div class="textbox">
+                <p><img src="IMG/icons_clock.png">${item.Opentime}</p>
+                <p><img src="IMG/icons_pin.png">${item.Add}</p>
+                <span><img src="IMG/icons_phone.png">${item.Tel}</span>
+                <p class="free"><img src="IMG/icons_tag.png">${item.Ticketinfo}</p>
+            </div>
+        </li>`
+        mainStr += li;
+    })
+    document.querySelector(".main h2").textContent = "高雄全部行政區";
+    mainList.innerHTML = mainStr;
+    pageShow()
+}
+
+//切換畫面
+function changeArea(e) {
+    let areaName = e.target.value;
+    console.log(areaName);
+    let mainStr = "";
+    dataAll.forEach(function (item) {
+        if (areaName == item.Zone) {
+            var li = `
+            <li class="card">
+                <div class="imgbox" style="background-image:url(${item.Picture1});">
+                    <h3>${item.Name}</h3>
+                    <p>${item.Zone}</p>
+                </div>
+                <div class="textbox">
+                    <p><img src="IMG/icons_clock.png">${item.Opentime}</p>
+                    <p><img src="IMG/icons_pin.png">${item.Add}</p>
+                    <span><img src="IMG/icons_phone.png">${item.Tel}</span>
+                    <p class="free"><img src="IMG/icons_tag.png">${item.Ticketinfo}</p>
+                </div>
+            </li>`
+            mainStr += li;
+        } else if (areaName == "高雄全部行政區") {
+            let li = `
+            <li class="card">
+                <div class="imgbox" style="background-image:url(${item.Picture1});">
+                    <h3>${item.Name}</h3>
+                    <p>${item.Zone}</p>
+                </div>
+                <div class="textbox">
+                    <p><img src="IMG/icons_clock.png">${item.Opentime}</p>
+                    <p><img src="IMG/icons_pin.png">${item.Add}</p>
+                    <span><img src="IMG/icons_phone.png">${item.Tel}</span>
+                    <p class="free"><img src="IMG/icons_tag.png">${item.Ticketinfo}</p>
+                </div>
+            </li>`
+            mainStr += li;
+        }
+    })
+    document.querySelector(".main h2").textContent = areaName;
+    mainList.innerHTML = mainStr;
+    pageShow()
+}
+
+//熱門畫面
+function hotRender(e) {
+    let hotName = e.target.value;
+    let mainStr = "";
+    dataAll.forEach(function (item) {
+        if (hotName == item.Zone) {
+            var li = `
+            <li class="card">
+                <div class="imgbox" style="background-image:url(${item.Picture1});">
+                    <h3>${item.Name}</h3>
+                    <p>${item.Zone}</p>
+                </div>
+                <div class="textbox">
+                    <p><img src="IMG/icons_clock.png">${item.Opentime}</p>
+                    <p><img src="IMG/icons_pin.png">${item.Add}</p>
+                    <span><img src="IMG/icons_phone.png">${item.Tel}</span>
+                    <p class="free"><img src="IMG/icons_tag.png">${item.Ticketinfo}</p>
+                </div>
+            </li>`
+            mainStr += li;
+        }
+    })
+    document.querySelector(".main h2").textContent = hotName;
+    mainList.innerHTML = mainStr;
+    pageShow()
+}
+//頁碼顯示
+function pageShow() {
+    let areaTotal = document.querySelectorAll(".card"); //抓出有多少個區域
+    let perPage = 6;//每一頁要顯示的量
+    let pageTotal = Math.ceil(areaTotal.length / perPage); //總頁數多少，如果有餘數，直接無條件進位
+    let pageStr = "";//頁碼文字
+    //產生頁數
+    for (let i = 0; i < pageTotal; i++) {
+        var pageContent = `<a href="#" data-num="${i}">${i + 1}</a>`;
+        pageStr += pageContent;
+    };
+    page.innerHTML = pageStr;
+    //---------------------------------------
+    areaTotal.forEach(function (item, index) {
+        if (index < 6) {
+            item.style.display = "block";
+        }
     })
 }
+
+//跳頁
+function goPage(e) {
+    e.preventDefault();
+    let areaTotal = document.querySelectorAll(".card");
+    let perPage = 6;//每一頁要顯示的量
+    let pageTotal = Math.ceil(areaTotal.length / perPage); //總頁數多少，如果有餘數，直接無條件進位
+    let pageNum = Number(e.target.dataset.num); //觸擊的頁碼標號
+    areaTotal.forEach(function (item, index) {
+        let minNum = index * perPage;
+        let maxNum = index * perPage + perPage;
+        if (pageNum == index && pageNum !== (pageTotal - 1)) {
+            for (i = minNum; i < maxNum; i++) {
+                areaTotal[i].style.display = "block";
+            }
+            for (l = maxNum; l < areaTotal.length; l++) {
+                areaTotal[l].style.display = "none";
+            }
+            for (s = 0; s < minNum; s++) {
+                areaTotal[s].style.display = "none";
+            }
+        } else if (pageNum == (pageTotal - 1)) {
+            for (i = minNum; i < (maxNum-2); i++) {
+                areaTotal[i].style.display = "block";
+            }
+            for (s = 0; s < minNum; s++) {
+                areaTotal[s].style.display = "none";
+            }
+        }
+        else {
+            return
+        };
+    })
+    // console.log(pageData)
+
+}
+
+/*--------- 回到最上層 ----------*/
+function scrollToTop(e) {
+    e.preventDefault();
+    window.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+    });
+}
+
