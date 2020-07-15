@@ -6,12 +6,12 @@
 //滑動到最上方
 
 /*---- 定義 ----*/
-var select = document.querySelector("#travelarea");
-var hotArea = document.querySelector(".arealist");
-var mainList = document.querySelector(".infolist");
-var page = document.querySelector(".pagination");
-var goTop = document.querySelector(".gotop");
-var dataAll;
+let select = document.querySelector("#travelarea");
+let hotArea = document.querySelector(".arealist");
+let mainList = document.querySelector(".infolist");
+let page = document.querySelector(".pagination");
+let goTop = document.querySelector(".gotop");
+let dataAll;
 
 /*撈資料*/
 var url = "https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97"
@@ -75,7 +75,8 @@ function renderReady() {
     pageShow();
 }
 
-//切換畫面
+
+//切換行政區畫面
 function changeArea(e) {
     let areaName = e.target.value;
     console.log(areaName);
@@ -125,9 +126,10 @@ function pageShow() {
     let pageTotal = Math.ceil(areaTotal.length / perPage); //總頁數多少，如果有餘數，直接無條件進位
     let pageStr = ""; //頁碼文字
     let prevPageStr = `<a class="prevpage changePage" href="#">&lsaquo; prev</a>` //上一頁
-    let nextPageStr = "" ; //下一頁
+    let nextPageStr = ""; //下一頁
+    // 如果總頁面大於一，才會顯示下一頁選項
     if (pageTotal > 1) {
-        nextPageStr = `<a class="nextpage changePage" href="#">next &rsaquo;</a>` 
+        nextPageStr = `<a class="nextpage changePage" href="#">next &rsaquo;</a>`
     }
     //產生頁數
     for (let i = 0; i < pageTotal; i++) {
@@ -143,8 +145,9 @@ function pageShow() {
     })
 }
 
-let nowPage = 0;//一開始預設當頁面為0
+
 //跳頁
+let nowPage = 0; //一開始預設當頁面為0
 function goPage(e) {
     console.log(e.target.textContent)
     let areaTotal = document.querySelectorAll(".card");
@@ -168,7 +171,7 @@ function goPage(e) {
         goChangePage(currentPage);
     }
     else { return }
-    console.log(nowPage)
+    // console.log(nowPage)
 
     //顯示上下一頁
     if (nowPage > 0 && nowPage !== (pageTotal - 1)) {
@@ -176,22 +179,15 @@ function goPage(e) {
         document.querySelector(".nextpage").style.display = "block";
     } else if (nowPage === 0) {
         document.querySelector(".prevpage").style.display = "none";
-    }
-    else if (nowPage === (pageTotal - 1)) {
+        document.querySelector(".nextpage").style.display = "block";
+    } else if (nowPage === (pageTotal - 1)) {
         document.querySelector(".nextpage").style.display = "none";
         document.querySelector(".prevpage").style.display = "block";
     } else if (nowPage === 0 && nowPage === (pageTotal - 1)) {
         document.querySelector(".nextpage").style.display = "none";
     } else { return }
 
-
-    //點擊頁碼變色
-    let pageAll = document.querySelectorAll("a");
-    pageAll.forEach(function (item) {
-        item.classList.remove("active");
-    })
-    e.target.classList.add('active');
-
+    //跳頁顯示畫面資料
     function goChangePage() {
         //每一頁要顯示的資料
         areaTotal.forEach(function (item, index) {
@@ -227,40 +223,13 @@ function goPage(e) {
             };
         })
     }
-    // //每一頁要顯示的資料
-    // areaTotal.forEach(function (item, index) {
-    //     //顯示的清單編號最大值與最小值公式(ex:編號0~6,6~11)
-    //     let minNum = index * perPage;
-    //     let maxNum = index * perPage + perPage;
-    //     //當頁碼編號等於項目編號且頁碼編號不等於總頁數-1，才會顯示當頁該有的資料(篩選掉最後一頁的資訊)
-    //     if (currentPage == index && currentPage !== (pageTotal - 1)) {
-    //         for (i = minNum; i < maxNum; i++) {
-    //             areaTotal[i].style.display = "block";
-    //         }
-    //         //隱藏該頁之後的清單
-    //         for (l = maxNum; l < areaTotal.length; l++) {
-    //             areaTotal[l].style.display = "none";
-    //         }
-    //         //隱藏該頁之前的清單
-    //         for (s = 0; s < minNum; s++) {
-    //             areaTotal[s].style.display = "none";
-    //         }
-    //     }
-    //     //最後一頁還剩餘多少的資訊
-    //     else if (currentPage == index && currentPage == (pageTotal - 1)) {
-    //         for (i = minNum; i < areaTotal.length; i++) {
-    //             areaTotal[i].style.display = "block";
-    //         }
-    //         //隱藏該頁之前的清單              
-    //         for (s = 0; s < minNum; s++) {
-    //             areaTotal[s].style.display = "none";
-    //         }
-    //     }
-    //     else {
-    //         return
-    //     };
-    // })
 
+    //點擊頁碼變色
+    let pageAll = document.querySelectorAll("a");
+    pageAll.forEach(function (item) {
+        item.classList.remove("active");
+    })
+    e.target.classList.add('active');
 }
 
 
