@@ -116,7 +116,8 @@ function changeArea(e) {
     })
     document.querySelector(".main h2").textContent = areaName;
     mainList.innerHTML = mainStr;
-    pageShow()
+    nowPage = 0;
+    pageShow();
 }
 
 //頁碼顯示
@@ -125,11 +126,11 @@ function pageShow() {
     let perPage = 6; //每一頁要顯示的量
     let pageTotal = Math.ceil(areaTotal.length / perPage); //總頁數多少，如果有餘數，直接無條件進位
     let pageStr = ""; //頁碼文字
-    let prevPageStr = `<a class="prevpage changePage" href="#">&lsaquo; prev</a>` //上一頁
+    let prevPageStr = `<a class="prevpage changePage" href="#title">&lsaquo; prev</a>` //上一頁
     let nextPageStr = ""; //下一頁
     // 如果總頁面大於一，才會顯示下一頁選項
     if (pageTotal > 1) {
-        nextPageStr = `<a class="nextpage changePage" href="#">next &rsaquo;</a>`
+        nextPageStr = `<a class="nextpage changePage" href="#title">next &rsaquo;</a>`
     }
     //產生頁數
     for (let i = 0; i < pageTotal; i++) {
@@ -153,21 +154,17 @@ function goPage(e) {
     let perPage = 6;//每一頁要顯示的量
     let pageTotal = Math.ceil(areaTotal.length / perPage); //總頁數多少，如果有餘數，直接無條件進位
     let pageNum = Number(e.target.dataset.num); //觸擊的頁碼編號
-    let currentPage = nowPage;
 
     // 儲存當前的頁面
     if (pageNum >= 0 && pageNum < pageTotal) {
         nowPage = pageNum;
-        currentPage = nowPage;
-        goChangePage(currentPage);
+        goChangePage(nowPage);
     } else if (e.target.textContent === "next ›") {
         nowPage += 1;
-        currentPage = nowPage;
-        goChangePage(currentPage);
+        goChangePage(nowPage);
     } else if (e.target.textContent === "‹ prev") {
         nowPage -= 1;
-        currentPage = nowPage;
-        goChangePage(currentPage);
+        goChangePage(nowPage);
     }
     else { return }
     // console.log(nowPage)
@@ -194,7 +191,7 @@ function goPage(e) {
             let minNum = index * perPage;
             let maxNum = index * perPage + perPage;
             //當頁碼編號等於項目編號且頁碼編號不等於總頁數-1，才會顯示當頁該有的資料(篩選掉最後一頁的資訊)
-            if (currentPage == index && currentPage !== (pageTotal - 1)) {
+            if (nowPage == index && nowPage !== (pageTotal - 1)) {
                 for (i = minNum; i < maxNum; i++) {
                     areaTotal[i].style.display = "block";
                 }
@@ -208,7 +205,7 @@ function goPage(e) {
                 }
             }
             //最後一頁還剩餘多少的資訊
-            else if (currentPage == index && currentPage == (pageTotal - 1)) {
+            else if (nowPage == index && nowPage == (pageTotal - 1)) {
                 for (i = minNum; i < areaTotal.length; i++) {
                     areaTotal[i].style.display = "block";
                 }
