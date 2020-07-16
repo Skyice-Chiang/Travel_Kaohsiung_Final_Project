@@ -145,9 +145,8 @@ function pageShow() {
     })
 }
 
-
-//跳頁
 let nowPage = 0; //一開始預設當頁面為0
+//跳頁
 function goPage(e) {
     console.log(e.target.textContent)
     let areaTotal = document.querySelectorAll(".card");
