@@ -14,7 +14,7 @@ let goTop = document.querySelector(".gotop");
 let dataAll;
 
 /*撈資料*/
-var url = "https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97"
+var url = "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
 axios.get(url).then(function (res) {
     dataAll = res.data.result.records;
     console.log(res.data.result.records);
