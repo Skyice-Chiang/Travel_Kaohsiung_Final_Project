@@ -14,7 +14,7 @@ let goTop = document.querySelector(".gotop");
 let dataAll;
 
 /*撈資料*/
-var url = "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json"
+let url = "https://raw.githubusercontent.com/hexschool/KCGTravel/master/datastore_search.json";
 axios.get(url).then(function (res) {
     dataAll = res.data.result.records;
     console.log(res.data.result.records);
@@ -48,7 +48,7 @@ function renderReady() {
     zoneNoRepeat.forEach(function (item) {
         let optionAdd = `<option value="${item}">${item}</option>`
         optionStr += optionAdd;
-    })
+    });
     select.innerHTML = optionDefault + optionStr;
 
     //-------- 主要區域顯示行政區清單-------
@@ -73,7 +73,7 @@ function renderReady() {
     document.querySelector(".main h2").textContent = "高雄全部行政區";
     mainList.innerHTML = mainStr;
     pageShow();
-}
+};
 
 
 //切換行政區畫面
@@ -83,7 +83,7 @@ function changeArea(e) {
     let mainStr = "";
     dataAll.forEach(function (item) {
         if (areaName == item.Zone) {
-            var li = `
+            let li = `
             <li class="card">
                 <div class="imgbox" style="background-image:url(${item.Picture1});">
                     <h3>${item.Name}</h3>
@@ -112,8 +112,8 @@ function changeArea(e) {
                 </div>
             </li>`
             mainStr += li;
-        }
-    })
+        };
+    });
     document.querySelector(".main h2").textContent = areaName;
     mainList.innerHTML = mainStr;
     nowPage = 0;
@@ -131,7 +131,7 @@ function pageShow() {
     // 如果總頁面大於一，才會顯示下一頁選項
     if (pageTotal > 1) {
         nextPageStr = `<a class="nextpage changePage" href="#title">next &rsaquo;</a>`
-    }
+    };
     //產生頁數
     for (let i = 0; i < pageTotal; i++) {
         var pageContent = `<a href="#title" data-num="${i}">${i + 1}</a>`;
@@ -142,14 +142,14 @@ function pageShow() {
     areaTotal.forEach(function (item, index) {
         if (index < 6) {
             item.style.display = "block";
-        }
-    })
-}
+        };
+    });
+};
 
 let nowPage = 0; //一開始預設當頁面為0
 //跳頁
 function goPage(e) {
-    console.log(e.target.textContent)
+    // console.log(e.target.textContent);
     let areaTotal = document.querySelectorAll(".card");
     let perPage = 6;//每一頁要顯示的量
     let pageTotal = Math.ceil(areaTotal.length / perPage); //總頁數多少，如果有餘數，直接無條件進位
@@ -166,7 +166,7 @@ function goPage(e) {
         nowPage -= 1;
         goChangePage(nowPage);
     }
-    else { return }
+    else { return };
     // console.log(nowPage)
 
     //顯示上下一頁
@@ -181,7 +181,7 @@ function goPage(e) {
         document.querySelector(".prevpage").style.display = "block";
     } else if (nowPage === 0 && nowPage === (pageTotal - 1)) {
         document.querySelector(".nextpage").style.display = "none";
-    } else { return }
+    } else { return };
 
     //跳頁顯示畫面資料
     function goChangePage() {
@@ -192,39 +192,39 @@ function goPage(e) {
             let maxNum = index * perPage + perPage;
             //當頁碼編號等於項目編號且頁碼編號不等於總頁數-1，才會顯示當頁該有的資料(篩選掉最後一頁的資訊)
             if (nowPage == index && nowPage !== (pageTotal - 1)) {
-                for (i = minNum; i < maxNum; i++) {
+                for (let i = minNum; i < maxNum; i++) {
                     areaTotal[i].style.display = "block";
-                }
+                };
                 //隱藏該頁之後的清單
-                for (l = maxNum; l < areaTotal.length; l++) {
+                for (let l = maxNum; l < areaTotal.length; l++) {
                     areaTotal[l].style.display = "none";
-                }
+                };
                 //隱藏該頁之前的清單
-                for (s = 0; s < minNum; s++) {
+                for (let s = 0; s < minNum; s++) {
                     areaTotal[s].style.display = "none";
-                }
+                };
             }
             //最後一頁還剩餘多少的資訊
             else if (nowPage == index && nowPage == (pageTotal - 1)) {
-                for (i = minNum; i < areaTotal.length; i++) {
+                for (let i = minNum; i < areaTotal.length; i++) {
                     areaTotal[i].style.display = "block";
-                }
+                };
                 //隱藏該頁之前的清單              
-                for (s = 0; s < minNum; s++) {
+                for (let s = 0; s < minNum; s++) {
                     areaTotal[s].style.display = "none";
-                }
+                };
             }
             else {
                 return
             };
-        })
-    }
+        });
+    };
 
     //點擊頁碼變色
     let pageAll = document.querySelectorAll("a");
     pageAll.forEach(function (item) {
         item.classList.remove("active");
-    })
+    });
     e.target.classList.add('active');
 }
 
