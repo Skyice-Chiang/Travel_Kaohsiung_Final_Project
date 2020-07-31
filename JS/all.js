@@ -55,7 +55,7 @@ function renderReady() {
     //全部顯示
     let mainStr = "";
     dataAll.forEach(function (item) {
-        let li = `
+        mainStr += `
         <li class="card">
             <div class="imgbox" style="background-image:url(${item.Picture1});">
                 <h3>${item.Name}</h3>
@@ -67,9 +67,8 @@ function renderReady() {
                 <span><img src="IMG/icons_phone.png">${item.Tel}</span>
                 <p class="free"><img src="IMG/icons_tag.png">${item.Ticketinfo}</p>
             </div>
-        </li>`
-        mainStr += li;
-    })
+        </li>`;
+    });
     document.querySelector(".main h2").textContent = "高雄全部行政區";
     mainList.innerHTML = mainStr;
     pageShow();
@@ -83,7 +82,7 @@ function changeArea(e) {
     let mainStr = "";
     dataAll.forEach(function (item) {
         if (areaName == item.Zone) {
-            let li = `
+            mainStr += `
             <li class="card">
                 <div class="imgbox" style="background-image:url(${item.Picture1});">
                     <h3>${item.Name}</h3>
@@ -95,8 +94,7 @@ function changeArea(e) {
                     <span><img src="IMG/icons_phone.png">${item.Tel}</span>
                     <p class="free"><img src="IMG/icons_tag.png">${item.Ticketinfo}</p>
                 </div>
-            </li>`
-            mainStr += li;
+            </li>`;
         } else if (areaName == "高雄全部行政區") {
             let li = `
             <li class="card">
